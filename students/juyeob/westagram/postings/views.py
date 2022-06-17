@@ -6,19 +6,10 @@ from django.views    import View
 from django.conf     import settings
 
 
-from postings.models import Post, Comment, Like
+from postings.models import Post, Comment
 from core.utils      import login_decorator
 
 class PostingView(View):
-    #def json_default(value):
-     #   if isinstance(value, datetime.date):
-      #      return value.strftime('%Y-%m-%d')
-       # raise TypeError('not JSON serializable')
-    #data = {'date': datetime.date.today()}
-    #json_data = json.dumps(data, default=json_default)
-
-
-
     @login_decorator
     def post(self, request):
         data = json.loads(request.body)
@@ -33,7 +24,7 @@ class PostingView(View):
         Post.objects.create(
             writer = writer,
             image_url = image_url,
-            contents = contents,
+            contents = contents
 
         )
 
@@ -53,3 +44,45 @@ class PostingView(View):
         ]
 
         return JsonResponse({'result':result}, status = 200)
+
+
+class CommentView(View):
+    @login_decorator
+    def post(self, request):
+        data = json.loads(request.body)
+
+        post = Post.objects.get(id=data['post'])
+        writer = request.user
+        contents = data['contents']
+
+        if contents == None :
+            return JsonResponse({"message" : "ERROR_NONE_CONTENTS"}, status = 400)
+        
+        Comment.objects.create(
+            writer = writer,
+            post = post,
+            contents = contents
+        )
+
+        return HttpResponse(status = 200)
+        
+
+
+"""
+class LikeView(View):
+    @login_decorator
+    def post(self, request):
+        data = json.loads(request.body)
+        post = Post.objects.all()
+
+        post_id = data['post_id']
+        writer_id = request.user
+
+        Like.objects.create(
+            post_id = post_id,
+            user_id = writer_id
+        )
+
+        return HttpResponse(status = 200)
+
+"""

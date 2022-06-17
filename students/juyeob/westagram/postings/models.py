@@ -7,25 +7,26 @@ class Post(models.Model):
     image_url = models.URLField(max_length=200, null=True)
     contents = models.CharField(max_length=2000)
     created_time = models.DateTimeField(auto_now_add=True)
-
-
+    
     class Meta:
         db_table = 'posts'
 
+    #데이터베이스 다시생성해야함
+
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     contents = models.CharField(max_length=500)
     created_time = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     
     class Meta:
         db_table = 'comments'
 
 
 class Like(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'likes'

@@ -4,7 +4,7 @@ from users.models import User
 
 class Post(models.Model):
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
-    image_url = models.URLField(max_length=200)
+    image_url = models.URLField(max_length=200, null=True)
     contents = models.CharField(max_length=2000)
     created_time = models.DateTimeField(auto_now_add=True)
 
@@ -23,7 +23,7 @@ class Comment(models.Model):
         db_table = 'comments'
 
 
-class like(models.Model):
+class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

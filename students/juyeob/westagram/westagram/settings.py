@@ -145,6 +145,7 @@ CORS_ALLOW_HEADERS = (
 )
 
 #Log
+'''
 LOGGING = {
     'disable_existing_loggers': False,
     'version': 1,
@@ -162,3 +163,4 @@ LOGGING = {
         },
     },
 }
+'''

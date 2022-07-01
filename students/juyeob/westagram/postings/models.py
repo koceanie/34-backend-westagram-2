@@ -11,7 +11,6 @@ class Post(models.Model):
     class Meta:
         db_table = 'posts'
 
-    #데이터베이스 다시생성해야함
 
 
 class Comment(models.Model):
